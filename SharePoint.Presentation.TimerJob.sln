@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTimerJob", "MyTimerJob\MyTimerJob.csproj", "{F3E1E57D-2789-4990-B76F-BD69CF12FD04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{4CFB197B-4EB8-4243-8E1B-779BFB17F01E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerJobSettingsHelper", "TimerJobSettingsHelper\TimerJobSettingsHelper.csproj", "{D51ECA57-8A5B-4D61-9471-F944D09426CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A96EABD-19EF-4A4B-9E55-E411F6DFDBD1}"
+	ProjectSection(SolutionItems) = preProject
+		UsefulDebuggingPowerShell.txt = UsefulDebuggingPowerShell.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E1E57D-2789-4990-B76F-BD69CF12FD04}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4CFB197B-4EB8-4243-8E1B-779BFB17F01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CFB197B-4EB8-4243-8E1B-779BFB17F01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CFB197B-4EB8-4243-8E1B-779BFB17F01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CFB197B-4EB8-4243-8E1B-779BFB17F01E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51ECA57-8A5B-4D61-9471-F944D09426CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51ECA57-8A5B-4D61-9471-F944D09426CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51ECA57-8A5B-4D61-9471-F944D09426CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51ECA57-8A5B-4D61-9471-F944D09426CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

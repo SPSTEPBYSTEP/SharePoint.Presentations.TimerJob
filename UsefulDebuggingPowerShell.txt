@@ -1,0 +1,13 @@
+# Restart SharePoint Timer Services
+Restart-Service SPTimerV4
+
+# To run the timer job at will
+$timerJob = Get-SPTimerJob -Identity "Demo Timer Job"
+Start-SPTimerJob $timerJob
+
+# Saving and retrieving configuration values for timer job
+# Run this in the executable directory for TimerJobSettingsHelper.exe
+
+.\TimerJobSettingsHelper.exe http://intranet Property1 GET
+
+.\TimerJobSettingsHelper.exe http://intranet Property1 "New Value" SET
