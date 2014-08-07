@@ -10,4 +10,4 @@ Start-SPTimerJob $timerJob
 
 .\TimerJobSettingsHelper.exe http://intranet Property1 GET
 
-.\TimerJobSettingsHelper.exe http://intranet Property1 "New Value" SET
+.\TimerJobSettingsHelper.exe http://intranet Property1 "New Value" SET 

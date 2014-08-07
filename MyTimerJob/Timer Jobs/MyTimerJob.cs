@@ -12,6 +12,7 @@ namespace MyTimerJob.Timer_Jobs
     {
         public static string jobName = "Demo Timer Job";
         const string jobTitle = "My Timer Job";
+        const string listName = "Movie Listings";
 
         #region Constructor
         public MyTimerJob()
@@ -41,7 +42,7 @@ namespace MyTimerJob.Timer_Jobs
                     return;
                 }
                 // Put your job's code here   
-                BusinessLogic.MyTimerBusinessLogic.Instance.Property1 = jobSettings.Property1;
+                BusinessLogic.MyTimerBusinessLogic.Instance.WOEIDs = jobSettings.Property1;
                 BusinessLogic.MyTimerBusinessLogic.Instance.Execute();
             }
             catch (Exception ex)
@@ -49,5 +50,12 @@ namespace MyTimerJob.Timer_Jobs
                 ULSLogger.Instance.LogError(ex);
             }
         }
+
+
+        /// <summary>
+        /// Ensure that the movies list exists
+        /// </summary>
+        private void EnsureList() { }
+
     }
 }
