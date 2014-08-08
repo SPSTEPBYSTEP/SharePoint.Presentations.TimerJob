@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTimerJob", "MyTimerJob\MyTimerJob.csproj", "{F3E1E57D-2789-4990-B76F-BD69CF12FD04}"
 EndProject
@@ -17,6 +17,17 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicTests", "BusinessLogicTests\BusinessLogicTests.csproj", "{295AF406-A456-40EA-AC4F-5D7E2395B607}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTimerJob.Resources", "MyTimerJob.Resources\MyTimerJob.Resources.csproj", "{66C5750B-EBB0-46AC-A9BC-0EF0DDA3C1A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{4F29002D-2085-4FDF-ACA9-4810575DE247}"
+	ProjectSection(SolutionItems) = preProject
+		TimerJobSnippets\Extensions.snippet = TimerJobSnippets\Extensions.snippet
+		TimerJobSnippets\Program.snippet = TimerJobSnippets\Program.snippet
+		TimerJobSnippets\Singleton.snippet = TimerJobSnippets\Singleton.snippet
+		TimerJobSnippets\TimerJob.snippet = TimerJobSnippets\TimerJob.snippet
+		TimerJobSnippets\TimerJobFeature.snippet = TimerJobSnippets\TimerJobFeature.snippet
+		TimerJobSnippets\TimerJobSettings.snippet = TimerJobSnippets\TimerJobSettings.snippet
+		TimerJobSnippets\ULSLogger.snippet = TimerJobSnippets\ULSLogger.snippet
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,5 +62,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4F29002D-2085-4FDF-ACA9-4810575DE247} = {0A96EABD-19EF-4A4B-9E55-E411F6DFDBD1}
 	EndGlobalSection
 EndGlobal
