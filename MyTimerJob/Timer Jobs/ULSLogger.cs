@@ -9,7 +9,7 @@ namespace MyTimerJob.Timer_Jobs
 {
     public class ULSLogger
     {
-        public const string CATEGORY = "TimerJobDemo";
+        public const string CATEGORY = "Sukul Demo";
         private static ULSLogger _Current;
         private SPDiagnosticsService diag = SPDiagnosticsService.Local;
 

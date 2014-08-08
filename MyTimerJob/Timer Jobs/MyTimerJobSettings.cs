@@ -16,6 +16,6 @@ namespace MyTimerJob.Timer_Jobs
             base(SettingsName, parent, id) { }
 
         [Persisted]
-        public string Property1;
+        public string WOEID;
     }
 }

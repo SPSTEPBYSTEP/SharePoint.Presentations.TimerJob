@@ -22,7 +22,6 @@ namespace MyTimerJob.Features.TimerJobFeature
         {
             try
             {
-
                 // Delete any existing jobs
                 SPWebApplication webApp = properties.Feature.Parent as SPWebApplication;
                 DeleteJob(webApp.JobDefinitions);
@@ -43,7 +42,7 @@ namespace MyTimerJob.Features.TimerJobFeature
                 // Configure the job.
                 MyTimerJob.Timer_Jobs.MyTimerJobSettings jobSettings = new MyTimerJob.Timer_Jobs.MyTimerJobSettings(
                     webApp, Guid.NewGuid());
-                jobSettings.Property1 = "Default Value";
+                jobSettings.WOEID = "";
 
                 jobSettings.Update(true);
             }

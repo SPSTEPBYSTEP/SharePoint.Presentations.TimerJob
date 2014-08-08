@@ -39,6 +39,12 @@ namespace BusinessLogic
             set;
         }
 
+        public SPWebApplication WebApplication
+        {
+            get;
+            set;
+        }
+
         public string JobName
         {
             get;
@@ -49,25 +55,26 @@ namespace BusinessLogic
         public void Execute()
         {
             EnsureList();
-            // Business logic goes here
-            foreach (var woeid in WOEIDs.Split('|'))
+            if (!String.IsNullOrEmpty(WOEIDs))
             {
-                try
+                foreach (var woeid in WOEIDs.Split('|'))
                 {
-                    var data = YahooWeather.Instance.GetWeatherDataAsJSON(woeid, "c");
-                    CreateListItem(webApplication, woeid, data, true);
-                }
-                catch (Exception ex)
-                {
-                    CreateListItem(webApplication, woeid, ex.ToString(), false);
+                    try
+                    {
+                        var data = YahooWeather.Instance.GetWeatherDataAsJSON(woeid, "c");
+                        CreateListItem(woeid, data, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        CreateListItem(woeid, ex.ToString(), false);
+                    }
                 }
             }
         }
 
-        private void EnsureList(SPWebApplication webApplication)
+        private void EnsureList()
         {
-
-            SPContentDatabase contentDb = webApplication.ContentDatabases[0];
+            SPContentDatabase contentDb = WebApplication.ContentDatabases[0];
             ULSLogger.Instance.LogInfo(string.Format("{0} is checking if {1} list exists", JobName, LISTNAME));
             SPList myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
 
@@ -77,9 +84,14 @@ namespace BusinessLogic
                 var list = contentDb.Sites[0].RootWeb.Lists.Add(LISTNAME, LISTNAME, SPListTemplateType.GenericList);
                 myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
 
-                myList.Fields.Add("JSONData", SPFieldType.Text, true);
+                myList.Fields.Add("JSONData", SPFieldType.Note, true);
+                var field = myList.Fields.GetFieldByInternalName("JSONData") as SPFieldMultiLineText;
+                field.RichText = false;
+
                 myList.Fields.Add("Success", SPFieldType.Boolean, true);
-                myList.Fields.Add("ErrorMessage", SPFieldType.Text, true);
+                myList.Fields.Add("ErrorMessage", SPFieldType.Note, true);
+                field = myList.Fields.GetFieldByInternalName("ErrorMessage") as SPFieldMultiLineText;
+                field.RichText = false;
 
                 // make new column visible in default view
                 SPView view = myList.DefaultView;
@@ -87,39 +99,43 @@ namespace BusinessLogic
                 view.ViewFields.Add("Success");
                 view.ViewFields.Add("ErrorMessage");
                 view.Update();
-                ULSLogger.Instance.LogInfo(string.Format("{0} is finished creating {1} list", JobName, LISTNAME)); 
+                ULSLogger.Instance.LogInfo(string.Format("{0} is finished creating {1} list", JobName, LISTNAME));
+            }
+            else
+            {
+                ULSLogger.Instance.LogInfo(string.Format("{0} found existing {1} list", JobName, LISTNAME));
             }
         }
 
-        private void CreateListItem(SPWebApplication webApplication, string woeid, string data, bool success)
+        private void CreateListItem(string woeid, string data, bool success)
         {
-            SPContentDatabase contentDb = webApplication.ContentDatabases[0];
+            SPContentDatabase contentDb = WebApplication.ContentDatabases[0];
             SPList myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
 
              if (myList != null)
              {
                  var listEnumeration = myList.Items.OfType<SPListItem>();
                  SPListItem item = null;
-                 // && p["Service"].ToString() == service && p["Method"].ToString() == method
                  item = listEnumeration.FirstOrDefault(p => p.Title == woeid);
                  if (item == null)
                  {
                      ULSLogger.Instance.LogInfo(string.Format("{0} is creating new weather list item", JobName));
                      item = myList.Items.Add();
                      item["Title"] = woeid;
-                     item["ErrorMessage"] = string.Empty;
-                     item["JSONData"] = data;
                  }
                  else
                  {
                      ULSLogger.Instance.LogInfo(string.Format("{0} is updating weather list item", JobName));
+                     item["ErrorMessage"] = string.Empty;
                  }
+                 item["Success"] = success;
+                 item["JSONData"] = data;
+
                  if (!success)
                  {
                      item["JSONData"] = string.Empty;
                      item["ErrorMessage"] = data;
                  }
-                 item["Success"] = success;
                  item.Update();
              }
         }

@@ -60,9 +60,9 @@ namespace TimerJobSettingsHelper
             Console.WriteLine("");
             Console.WriteLine("Examples:");
             Console.WriteLine("");
-            Console.WriteLine("MyTimerJobSettingsHelper.exe http://intranet Property1 GET");
+            Console.WriteLine("MyTimerJobSettingsHelper.exe http://intranet WOEID GET");
             Console.WriteLine("");
-            Console.WriteLine(@"MyTimerJobSettingsHelper.exe http://intranet Property1 ""Property 1 New Value"" SET");
+            Console.WriteLine(@"MyTimerJobSettingsHelper.exe http://intranet WOEID ""Property New Value"" SET");
             Console.WriteLine("");
 
             Console.BackgroundColor = bg;
