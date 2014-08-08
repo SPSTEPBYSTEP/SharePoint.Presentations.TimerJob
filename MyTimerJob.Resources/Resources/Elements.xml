@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Resources" RootWebOnly="TRUE">
+    <File Path="Resources\partial\Sukul.Demo.Weather.html" Url="SiteAssets/partial/Sukul.Demo.Weather.html" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+    <File Path="Resources\jQuery\jquery-1.11.1.min.js" Url="SiteAssets/jQuery/jquery-1.11.1.min.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+    <File Path="Resources\javascript\Sukul.Demo.Weather.js" Url="SiteAssets/javascript/Sukul.Demo.Weather.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+  </Module>
+</Elements>

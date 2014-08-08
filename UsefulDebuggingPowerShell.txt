@@ -10,4 +10,10 @@ Start-SPTimerJob $timerJob
 
 .\TimerJobSettingsHelper.exe http://intranet WOEID GET
 
-.\TimerJobSettingsHelper.exe http://intranet WOEID "55864247" SET 
+.\TimerJobSettingsHelper.exe http://intranet WOEID "55864247|1105779|1100661" SET 
+
+---
+Display
+
+1. Add a content editor webpart
+2. Set its location to /SiteAssets/partial/Sukul.Demo.Weather.html
