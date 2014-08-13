@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>SnippetFile1</Title>
+      <Author>
+      </Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp"><![CDATA[public class YahooWeather
+    {
+        private YahooWeather()
+        {
+
+        }
+        #region Singleton Instance
+        private static object lockO = new object();
+        private static YahooWeather _instance = null;
+        public static YahooWeather Instance
+        {
+            get
+            {
+                if (null == _instance)
+                {
+                    lock (lockO)
+                    {
+                        if (null == _instance)
+                        {
+                            _instance = new YahooWeather();
+                        }
+                    }
+                }
+                return _instance;
+            }
+        }
+        #endregion
+
+        const string weatherUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=select * from weather.forecast where woeid=\"{0}\" and u=\"{1}\"";
+        
+        public string GetWeatherDataAsJSON(string woeId, string temperatureUnit)
+        {
+            var apiUrl = string.Format(weatherUrl, woeId, temperatureUnit);
+            return new System.Net.WebClient().DownloadString(apiUrl);
+        }
+    }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

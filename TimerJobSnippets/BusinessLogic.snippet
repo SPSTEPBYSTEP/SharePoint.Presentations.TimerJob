@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Business Logic</Title>
+      <Author>Windows User</Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>MyTimerBusinessLogic</ID>
+          <ToolTip>Business Logic class name</ToolTip>
+          <Default>MyTimerBusinessLogic</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[ public class MyTimerBusinessLogic
+    {
+        #region Singleton Instance
+        private static object lockObj = new object();
+        private static MyTimerBusinessLogic _instance = null;
+        public static MyTimerBusinessLogic Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (lockObj)
+                    {
+                        if (_instance == null) { _instance = new MyTimerBusinessLogic(); }
+                    }
+                }
+                return _instance;
+            }
+        }
+        #endregion
+
+        private const string LISTNAME = "Yahoo Weather";
+        #region Properties
+        public string WOEIDs
+        {
+            get;
+            set;
+        }
+
+        public SPWebApplication WebApplication
+        {
+            get;
+            set;
+        }
+
+        public string JobName
+        {
+            get;
+            set;
+        }
+        #endregion
+
+        public void Execute()
+        {
+            EnsureList();
+            if (!String.IsNullOrEmpty(WOEIDs))
+            {
+                foreach (var woeid in WOEIDs.Split('|'))
+                {
+                    try
+                    {
+                        var data = YahooWeather.Instance.GetWeatherDataAsJSON(woeid, "c");
+                        CreateListItem(woeid, data, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        CreateListItem(woeid, ex.ToString(), false);
+                    }
+                }
+            }
+        }
+
+        private void EnsureList()
+        {
+            SPContentDatabase contentDb = WebApplication.ContentDatabases[0];
+            ULSLogger.Instance.LogInfo(string.Format("{0} is checking if {1} list exists", JobName, LISTNAME));
+            SPList myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
+
+            if (myList == null)
+            {
+                ULSLogger.Instance.LogInfo(string.Format("{0} is creating {1} list", JobName, LISTNAME));
+                var list = contentDb.Sites[0].RootWeb.Lists.Add(LISTNAME, LISTNAME, SPListTemplateType.GenericList);
+                myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
+
+                myList.Fields.Add("JSONData", SPFieldType.Note, true);
+                var field = myList.Fields.GetFieldByInternalName("JSONData") as SPFieldMultiLineText;
+                field.RichText = false;
+
+                myList.Fields.Add("Success", SPFieldType.Boolean, true);
+                myList.Fields.Add("ErrorMessage", SPFieldType.Note, true);
+                field = myList.Fields.GetFieldByInternalName("ErrorMessage") as SPFieldMultiLineText;
+                field.RichText = false;
+
+                // make new column visible in default view
+                SPView view = myList.DefaultView;
+                view.ViewFields.Add("JSONData");
+                view.ViewFields.Add("Success");
+                view.ViewFields.Add("ErrorMessage");
+                view.Update();
+                ULSLogger.Instance.LogInfo(string.Format("{0} is finished creating {1} list", JobName, LISTNAME));
+            }
+            else
+            {
+                ULSLogger.Instance.LogInfo(string.Format("{0} found existing {1} list", JobName, LISTNAME));
+            }
+        }
+
+        private void CreateListItem(string woeid, string data, bool success)
+        {
+            SPContentDatabase contentDb = WebApplication.ContentDatabases[0];
+            SPList myList = contentDb.Sites[0].RootWeb.Lists.TryGetList(LISTNAME);
+
+             if (myList != null)
+             {
+                 var listEnumeration = myList.Items.OfType<SPListItem>();
+                 SPListItem item = null;
+                 item = listEnumeration.FirstOrDefault(p => p.Title == woeid);
+                 if (item == null)
+                 {
+                     ULSLogger.Instance.LogInfo(string.Format("{0} is creating new weather list item", JobName));
+                     item = myList.Items.Add();
+                     item["Title"] = woeid;
+                 }
+                 else
+                 {
+                     ULSLogger.Instance.LogInfo(string.Format("{0} is updating weather list item", JobName));
+                     item["ErrorMessage"] = string.Empty;
+                 }
+                 item["Success"] = success;
+                 item["JSONData"] = data;
+
+                 if (!success)
+                 {
+                     item["JSONData"] = string.Empty;
+                     item["ErrorMessage"] = data;
+                 }
+                 item.Update();
+             }
+        }
+    }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
