@@ -31,18 +31,20 @@
           </Function>
         </Literal>
       </Declarations>
-      <Code Language="csharp"><![CDATA[        public override void FeatureActivated(SPFeatureReceiverProperties properties)
+      <Code Language="csharp"><![CDATA[public class TimerJobFeatureEventReceiver : SPFeatureReceiver
+    {
+        
+        public override void FeatureActivated(SPFeatureReceiverProperties properties)
         {
             try
             {
-
                 // Delete any existing jobs
                 SPWebApplication webApp = properties.Feature.Parent as SPWebApplication;
                 DeleteJob(webApp.JobDefinitions);
 
                 // Create the job.
-                MyTimerJob.Timer_Jobs.$MyTimerJob$ job = 
-                    new MyTimerJob.Timer_Jobs.$MyTimerJob$(MyTimerJob.Timer_Jobs.$MyTimerJob$.jobName, webApp);
+                TJ.MyTimerJob job =
+                    new TJ.MyTimerJob(TJ.MyTimerJob.jobName, webApp);
 
                 // Create the schedule so that the job runs hourly, sometime 
                 // during the first quarter of the hour.
@@ -54,15 +56,15 @@
                 job.Update();
 
                 // Configure the job.
-                MyTimerJob.Timer_Jobs.$MyTimerJobSettings$ jobSettings = new MyTimerJob.Timer_Jobs.$MyTimerJobSettings$(
+                TJ.MyTimerJobSettings jobSettings = new TJ.MyTimerJobSettings(
                     webApp, Guid.NewGuid());
-                jobSettings.Property1 = "Default Value";
-                
+                jobSettings.WOEID = "";
+
                 jobSettings.Update(true);
             }
             catch (Exception ex)
             {
-                ULSLogger.Instance.LogError(ex);
+                TJ.ULSLogger.Instance.LogError(ex);
             }
         }
 
@@ -74,9 +76,9 @@
                 DeleteJob(webApp.JobDefinitions);
 
                 // Delete the job's settings.
-                MyTimerJob.Timer_Jobs.$MyTimerJobSettings$ jobSettings = 
-                    webApp.GetChild<MyTimerJob.Timer_Jobs.$MyTimerJobSettings$>
-                        (MyTimerJob.Timer_Jobs.$MyTimerJobSettings$.SettingsName);
+                TJ.MyTimerJobSettings jobSettings =
+                    webApp.GetChild<TJ.MyTimerJobSettings>
+                        (TJ.MyTimerJobSettings.SettingsName);
                 if (jobSettings != null)
                 {
                     jobSettings.Delete();
@@ -84,7 +86,7 @@
             }
             catch (Exception ex)
             {
-                ULSLogger.Instance.LogError(ex);
+                TJ.ULSLogger.Instance.LogError(ex);
             }
         }
 
@@ -93,7 +95,7 @@
         {
             foreach (SPJobDefinition job in jobs)
             {
-                if (job.Name.Equals(MyTimerJob.Timer_Jobs.$MyTimerJob$.jobName, 
+                if (job.Name.Equals(TJ.MyTimerJob.jobName,
                             StringComparison.OrdinalIgnoreCase))
                 {
                     job.Delete();
@@ -105,7 +107,7 @@
             // Find the job and delete it.
             foreach (SPJobDefinition job in service.JobDefinitions)
             {
-                if (job.Name == MyTimerJob.Timer_Jobs.$MyTimerJob$.jobName)
+                if (job.Name == TJ.MyTimerJob.jobName)
                 {
                     job.Delete();
                     break;
@@ -113,15 +115,16 @@
             }
 
             // Delete the job's settings.
-            MyTimerJob.Timer_Jobs.$MyTimerJobSettings$ jobSettings = service.GetChild<
-                MyTimerJob.Timer_Jobs.$MyTimerJobSettings$>(
-                    MyTimerJob.Timer_Jobs.$MyTimerJobSettings$.SettingsName);
+            TJ.MyTimerJobSettings jobSettings = service.GetChild<
+                 TJ.MyTimerJobSettings>(
+                     TJ.MyTimerJobSettings.SettingsName);
             if (jobSettings != null)
             {
                 jobSettings.Delete();
             }
         }
-        #endregion]]></Code>
+        #endregion
+    }]]></Code>
     </Snippet>
   </CodeSnippet>
 </CodeSnippets>

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using MyTimerJob.Timer_Jobs;
+using TJ = MyTimerJob.Timer_Jobs;
 
 namespace MyTimerJob.Features.TimerJobFeature
 {
@@ -27,8 +27,8 @@ namespace MyTimerJob.Features.TimerJobFeature
                 DeleteJob(webApp.JobDefinitions);
 
                 // Create the job.
-                MyTimerJob.Timer_Jobs.MyTimerJob job =
-                    new MyTimerJob.Timer_Jobs.MyTimerJob(MyTimerJob.Timer_Jobs.MyTimerJob.jobName, webApp);
+                TJ.MyTimerJob job =
+                    new TJ.MyTimerJob(TJ.MyTimerJob.jobName, webApp);
 
                 // Create the schedule so that the job runs hourly, sometime 
                 // during the first quarter of the hour.
@@ -40,7 +40,7 @@ namespace MyTimerJob.Features.TimerJobFeature
                 job.Update();
 
                 // Configure the job.
-                MyTimerJob.Timer_Jobs.MyTimerJobSettings jobSettings = new MyTimerJob.Timer_Jobs.MyTimerJobSettings(
+                TJ.MyTimerJobSettings jobSettings = new TJ.MyTimerJobSettings(
                     webApp, Guid.NewGuid());
                 jobSettings.WOEID = "";
 
@@ -48,7 +48,7 @@ namespace MyTimerJob.Features.TimerJobFeature
             }
             catch (Exception ex)
             {
-                ULSLogger.Instance.LogError(ex);
+                TJ.ULSLogger.Instance.LogError(ex);
             }
         }
 
@@ -60,9 +60,9 @@ namespace MyTimerJob.Features.TimerJobFeature
                 DeleteJob(webApp.JobDefinitions);
 
                 // Delete the job's settings.
-                MyTimerJob.Timer_Jobs.MyTimerJobSettings jobSettings =
-                    webApp.GetChild<MyTimerJob.Timer_Jobs.MyTimerJobSettings>
-                        (MyTimerJob.Timer_Jobs.MyTimerJobSettings.SettingsName);
+                TJ.MyTimerJobSettings jobSettings =
+                    webApp.GetChild<TJ.MyTimerJobSettings>
+                        (TJ.MyTimerJobSettings.SettingsName);
                 if (jobSettings != null)
                 {
                     jobSettings.Delete();
@@ -70,7 +70,7 @@ namespace MyTimerJob.Features.TimerJobFeature
             }
             catch (Exception ex)
             {
-                ULSLogger.Instance.LogError(ex);
+                TJ.ULSLogger.Instance.LogError(ex);
             }
         }
 
@@ -79,7 +79,7 @@ namespace MyTimerJob.Features.TimerJobFeature
         {
             foreach (SPJobDefinition job in jobs)
             {
-                if (job.Name.Equals(MyTimerJob.Timer_Jobs.MyTimerJob.jobName,
+                if (job.Name.Equals(TJ.MyTimerJob.jobName,
                             StringComparison.OrdinalIgnoreCase))
                 {
                     job.Delete();
@@ -91,7 +91,7 @@ namespace MyTimerJob.Features.TimerJobFeature
             // Find the job and delete it.
             foreach (SPJobDefinition job in service.JobDefinitions)
             {
-                if (job.Name == MyTimerJob.Timer_Jobs.MyTimerJob.jobName)
+                if (job.Name == TJ.MyTimerJob.jobName)
                 {
                     job.Delete();
                     break;
@@ -99,9 +99,9 @@ namespace MyTimerJob.Features.TimerJobFeature
             }
 
             // Delete the job's settings.
-            MyTimerJob.Timer_Jobs.MyTimerJobSettings jobSettings = service.GetChild<
-                MyTimerJob.Timer_Jobs.MyTimerJobSettings>(
-                    MyTimerJob.Timer_Jobs.MyTimerJobSettings.SettingsName);
+            TJ.MyTimerJobSettings jobSettings = service.GetChild<
+                 TJ.MyTimerJobSettings>(
+                     TJ.MyTimerJobSettings.SettingsName);
             if (jobSettings != null)
             {
                 jobSettings.Delete();

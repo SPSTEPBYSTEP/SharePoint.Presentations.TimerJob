@@ -11,7 +11,7 @@ namespace MyTimerJob.Timer_Jobs
     public class MyTimerJob : SPJobDefinition
     {
         public static string jobName = "Demo Timer Job";
-        const string jobTitle = "My Timer Job";
+        const string jobTitle = "My Demo Timer Job";
         const string listName = "Movie Listings";
 
         #region Constructor

@@ -31,16 +31,16 @@
           </Function>
         </Literal>
       </Declarations>
-      <Code Language="csharp"><![CDATA[public class $TimerJobSettingsClassName$ : SPPersistedObject
+      <Code Language="csharp"><![CDATA[public class MyTimerJobSettings : SPPersistedObject
     {
-        public static string SettingsName = "$MyTimerJobSettingsName$";
+        public static string SettingsName = "MyTimerJobSettings";
 
-        public $TimerJobSettingsClassName$() { }
-        public $TimerJobSettingsClassName$(SPPersistedObject parent, Guid id) :
+        public MyTimerJobSettings() { }
+        public MyTimerJobSettings(SPPersistedObject parent, Guid id) :
             base(SettingsName, parent, id) { }
 
         [Persisted]
-        public string Property1;
+        public string WOEID;
     }]]></Code>
     </Snippet>
   </CodeSnippet>
