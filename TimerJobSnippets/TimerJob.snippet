@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>TimerJob</Title>
+      <Author>Shailen Sukul</Author>
+      <Description>Create the base class for a SharePoint Timer Job</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>TimerJob</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>className</ID>
+          <ToolTip>The name of your class</ToolTip>
+          <Default>MyTimerJob</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>jobName</ID>
+          <ToolTip>The name of your timer job</ToolTip>
+          <Default>Demo Timer Job</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>jobTitle</ID>
+          <ToolTip>jobTitle</ToolTip>
+          <Default>My Timer Job</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>timerJobSettings</ID>
+          <ToolTip>MyTimerJobSettings</ToolTip>
+          <Default>MyTimerJobSettings</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method body"><![CDATA[public class $className$ : SPJobDefinition   {
+        public static string jobName = "$jobName$";
+        const string jobTitle = "$jobTitle$";
+
+        #region Constructor
+        public $className$() : base()
+        {}
+        public $className$(string jobName, SPService service, 
+            SPServer server, SPJobLockType targetType) : base(jobName, service, 
+            server, targetType)
+        {}
+        public $className$(string jobName, SPWebApplication webApplication)
+            : base(jobName, webApplication, null, SPJobLockType.ContentDatabase)
+        {
+            this.Title = jobTitle;
+        }
+        #endregion
+        public override void Execute(Guid targetInstanceId)
+        {            
+            try
+            {
+                ULSLogger.Instance.LogInfo(string.Format("{0} is searching for its configuration", jobName));
+                // Retrieve the timer job's setting 
+                $timerJobSettings$ jobSettings = this.WebApplication.GetChild<$timerJobSettings$>($timerJobSettings$.SettingsName);
+                if (jobSettings == null)
+                {
+                    ULSLogger.Instance.LogInfo(string.Format("{0} could not find its configuration. There is nothing to do, will check again in next run.", jobName));
+                    return;
+                }
+                // Put your job's code here       
+            }
+            catch (Exception ex)
+            {
+                ULSLogger.Instance.LogError(ex);
+            }
+        }
+    }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

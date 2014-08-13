@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>TimerJobSettings</Title>
+      <Author>Windows User</Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>TimerJobSettingsClassName</ID>
+          <ToolTip>SnapshotDataSyncJobSettings</ToolTip>
+          <Default>MyTimerJobSettings</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MyTimerJobSettingsName</ID>
+          <ToolTip>MyTimerJobSettingsName</ToolTip>
+          <Default>MyTimerJobSettings</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[public class $TimerJobSettingsClassName$ : SPPersistedObject
+    {
+        public static string SettingsName = "$MyTimerJobSettingsName$";
+
+        public $TimerJobSettingsClassName$() { }
+        public $TimerJobSettingsClassName$(SPPersistedObject parent, Guid id) :
+            base(SettingsName, parent, id) { }
+
+        [Persisted]
+        public string Property1;
+    }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
